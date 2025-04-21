@@ -1,6 +1,6 @@
 # cm-notify-core
 [![Version](https://img.shields.io/npm/v/@netcentric/cm-notify-core.svg)](https://npmjs.org/package/@netcentric/cm-notify-core)
-[![Build Status](https://github.com/netcentric/cm-notify-core/workflows/CI/badge.svg?branch=main)](https://github.com/netcentric/cm-notify-core/actions)
+[![Release Status](https://github.com/Netcentric/cm-notify-core/actions/workflows/release.yml/badge.svg)](https://github.com/Netcentric/cm-notify-core/actions/workflows/release.yml)
 [![CodeQL Analysis](https://github.com/netcentric/cm-notify-core/workflows/CodeQL/badge.svg?branch=main)](https://github.com/netcentric/cm-notify-core/actions)
 [![semver: semantic-release](https://img.shields.io/badge/semver-semantic--release-blue.svg)](https://github.com/semantic-release/semantic-release)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
