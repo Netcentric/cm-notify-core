@@ -1,5 +1,5 @@
 const { OAuth2Client } = require('google-auth-library');
-const { getJsonData } = require('./utils/files');
+const { CMUtils } = require('./utils');
 
 /**
  * @typedef {Object} CredentialsConfig
@@ -35,8 +35,8 @@ class Email {
    * @returns {CredentialsConfig}
    */
   getCredentials() {
-    const credentials = getJsonData(this.CONFIG.CREDENTIALS_FILENAME, this.dataPath);
-    const token = getJsonData(this.CONFIG.TOKEN_FILENAME, this.dataPath);
+    const credentials = CMUtils.getJsonData(this.CONFIG.CREDENTIALS_FILENAME, this.dataPath);
+    const token = CMUtils.getJsonData(this.CONFIG.TOKEN_FILENAME, this.dataPath);
     return { credentials, token };
   }
 

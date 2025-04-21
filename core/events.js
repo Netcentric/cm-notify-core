@@ -1,5 +1,4 @@
-const { getJsonData } = require('./utils/files');
-const { convertUTCToTimezone } = require('./utils/timezone');
+const { CMUtils } = require('./utils');
 
 /**
  * @typedef {Object} PipelineEvent
@@ -70,7 +69,7 @@ class Events {
    * @returns {Object} An object containing the program, pipeline, and execution details.
    */
   getPipelineData(apiUrl) {
-    const pipelinesList = getJsonData(this.PIPELINE_DATA_FILENAME, this.dataPath);
+    const pipelinesList = CMUtils.getJsonData(this.PIPELINE_DATA_FILENAME, this.dataPath);
     const urlPath = apiUrl.split('https://cloudmanager.adobe.io/api/')[1];
     const urlParts = urlPath.split('/');
     const id = urlParts[3];
@@ -102,9 +101,9 @@ class Events {
     if (!event) {
       console.log('Event is null');
       return null;
-    };
+    }
     const validEvent = Object.entries(this.eventsConfig)
-      .find(([key, val]) => val.type === event['@type'] && val.objectType === event['xdmEventEnvelope:objectType']);
+      .find(([, val]) => val.type === event['@type'] && val.objectType === event['xdmEventEnvelope:objectType']);
 
     if (!validEvent) {
       console.log('Event Not valid', event['@type'], event['xdmEventEnvelope:objectType']);
@@ -119,7 +118,7 @@ class Events {
     }
     return {
       status: validEvent[0],
-      date: convertUTCToTimezone(event['activitystreams:published']),
+      date: CMUtils.convertUTCToTimezone(event['activitystreams:published']),
       url: data.url,
       urlText: data.urlText,
       name: data.name,

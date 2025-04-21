@@ -1,3 +1,4 @@
+const { CMUtils } = require('./utils');
 const { Events } = require('./events');
 const { Notifications } = require('./notifications');
 const { DEFAULT_CONFIG } = require('./config');
@@ -103,18 +104,17 @@ class CMNotify {
 /**
  * Sends notifications to the configured channels.
  * @param requestBody
- * @param {boolean} waitResponse - If true, waits for all notifications to be settled before returning.
- * @param {MessengerConfig} messengerConfig
- * @param {CmConfig} cmConfig
- * @param {string} title - The title of the notification. Defaults to 'Cloud Manager Pipeline Notification'.
+ * @param {boolean} [waitResponse] - If true, waits for all notifications to be settled before returning.
+ * @param {CmNotifyConfig} [cmConfig]
  * @returns {Promise<Array<PromiseSettledResult<Awaited<*>>>|boolean>}
  */
-async function cmNotify(requestBody, waitResponse, messengerConfig, cmConfig, title) {
-  const cmNotify = new CMNotify(messengerConfig, cmConfig, title);
+async function cmNotify(requestBody, waitResponse, cmConfig) {
+  const cmNotify = new CMNotify(cmConfig);
   return cmNotify.post(requestBody, waitResponse);
 }
 
 module.exports = {
   cmNotify,
-  CMNotify
+  CMNotify,
+  CMUtils
 }
