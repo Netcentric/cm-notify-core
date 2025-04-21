@@ -1,0 +1,31 @@
+{
+  "name": "@netcentric/cm-notify-core",
+  "version": "1.0.0",
+  "description": "Adobe Cloud Manager Pipeline Notifications to Slack, Teams and Email",
+  "license": "Apache-2.0",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/netcentric/cm-notify-core"
+  },
+  "main": "core/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\""
+  },
+  "dependencies": {},
+  "peerDependencies": {
+    "google-auth-library": "9.15.1"
+  },
+  "keywords": [
+    "Cloud Manager",
+    "Notifications",
+    "Slack",
+    "Teams",
+    "Email",
+    "Adobe",
+    "Pipelines"
+  ]
+}

@@ -1,0 +1,46 @@
+name: Manual Release
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version'
+        type: choice
+        required: true
+        default: fix
+        options:
+          - fix
+          - feat
+          - BREAKING CHANGE
+      dryRun:
+        description: 'DryRun'
+        type: boolean
+        default: true
+# ENV and Config
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  GIT_AUTHOR_NAME: github-actions
+  GIT_AUTHOR_EMAIL: github-actions@github.com
+  GIT_COMMITTER_NAME: github-actions
+  GIT_COMMITTER_EMAIL: github-actions@github.com
+  CI: true
+# Main Job
+jobs:
+  manual-release:
+    name: Test, Build and force Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Commit trigger
+        run: |
+          git commit --allow-empty -m "${{ github.event.inputs.version }}: Trigger Manual Release
+
+          ${{ github.event.inputs.version }}:Forced Manual Release without code changes"
+      - name: Publish npm package
+        uses: cycjimmy/semantic-release-action@v4
+        with:
+          dry_run: ${{ github.event.inputs.dryRun == 'true' }}
+          extra_plugins: |
+            @semantic-release/changelog
+            @semantic-release/git
