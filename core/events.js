@@ -129,7 +129,7 @@ class Events {
 
   getValidEvents(requestBody = {}) {
     if (this.clientId && this.clientId !== requestBody.recipient_client_id) {
-      console.warn(`Unexpected client id. Was expecting ${this.clientId} and received ${requestBody.recipient_client_id}`)
+      console.warn(`Unexpected client id. Was expecting length ${this.clientId?.length} and received ${requestBody.recipient_client_id}`)
       return { error: 'Invalid client ID' };
     }
     const events = requestBody.events || [requestBody.event];
