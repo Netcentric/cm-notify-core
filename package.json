@@ -1,6 +1,6 @@
 {
   "name": "@netcentric/cm-notify-core",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Adobe Cloud Manager Pipeline Notifications to Slack, Teams and Email",
   "license": "Apache-2.0",
   "private": false,

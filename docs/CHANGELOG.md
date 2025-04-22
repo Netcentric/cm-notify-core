@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/netcentric/cm-notify-core/compare/v1.0.1...v1.0.2) (2025-04-22)
+
+
+### Bug Fixes
+
+* add dotenv ([9d60512](https://github.com/netcentric/cm-notify-core/commit/9d6051238d3199c84869be4ceac90aeb5d7261c9))
+
 ## [1.0.1](https://github.com/netcentric/cm-notify-core/compare/v1.0.0...v1.0.1) (2025-04-21)
 
 
