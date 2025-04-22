@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const DEFAULT_CONFIG = {
   slackWebhook: process.env.SLACK_WEBHOOK,
   teamsWebhook: process.env.TEAMS_WEBHOOK,
