@@ -83,7 +83,7 @@ URL: program/12345/pipeline/12345/execution/12345
 ## Cloud Manager pipelines data (optional)
 
 - The application needs a list of Cloud Manager pipelines to create message details.
-- The list of pipelines can be generated using the `cm-notify` CLI.
+- The list of pipelines can be generated using the `@netcentric/cm-notify` CLI.
 - Or you can create the file manually. File name needs to be `pipelines-data.json` located in `.data` directory.
 ```json
 [
@@ -109,7 +109,7 @@ URL: program/12345/pipeline/12345/execution/12345
 ## Google Auth Token (optional, only if Email notification is used)
 
 - The application uses Google Auth to send emails.
-- You can use the `cm-notify` CLI to generate the token.
+- You can use the `@netcentric/cm-notify` CLI to generate the token.
 - Or you can create the token manually. 
 - The token is stored in the `.data` directory in the `gmail-token.json` file.
 - For GMAIL API you also need `google-credentials.json` in the `.data` directory.
