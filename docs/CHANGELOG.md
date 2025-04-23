@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/netcentric/cm-notify-core/compare/v1.0.3...v1.0.4) (2025-04-23)
+
+
+### Bug Fixes
+
+* add verification ([f51497c](https://github.com/netcentric/cm-notify-core/commit/f51497c2086195434b140d94095b7173e5ca11e4))
+
 ## [1.0.3](https://github.com/netcentric/cm-notify-core/compare/v1.0.2...v1.0.3) (2025-04-22)
 
 
