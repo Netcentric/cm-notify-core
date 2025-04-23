@@ -20,7 +20,7 @@ const { CMNotify } = require('@netcentric/cm-notify-core');
 const cmNotify = new CMNotify();
 
 router.post('/cm-webhook', async (req, res, next) => {
-  const isValidEvent = await cmNotify.post(req.body);
+  const isValidEvent = await cmNotify.post(req);
 
   if (!isValidEvent) {
     return res.status(400).send('Invalid event');
@@ -29,17 +29,27 @@ router.post('/cm-webhook', async (req, res, next) => {
   res.send('Valid event');
 })
 ```
+
  - If you need to wait for the message to be sent, you can use the `waitResponse` param in `post` method.
+ - If you need to verify the request, you can use the `verify` param in `post` method. For verification you need to set the `secret` in the config. The secret can be a string, path to PublicKey or content of Public Key.
+
 ```javascript
   /**
-   * Sends notifications to the configured channels.
-   * @param requestBody
-   * @param waitResponse {boolean} - If true, waits for all notifications to be settled before returning.
-   * @returns {Promise<Array<PromiseSettledResult<Awaited<*>>>|boolean>}
-   */
-  async post(requestBody, waitResponse = false) {}
+ * Sends notifications to the configured channels.
+ * @param {Object} req - The request object containing the event data.
+ * @param {Object} config - Configuration options for the method.
+ * @param {boolean} [config.verify=false] - If true, verifies the request signature before processing.
+ * @param {boolean} [config.waitResponse=false] - If true, waits for all notifications to be settled before returning.
+ * @returns {Promise<Array<PromiseSettledResult<Awaited<*>>>|boolean>} - Returns a promise that resolves to the notification results or a boolean.
+ */
+  async post(req, {
+    verify = false,
+    waitResponse = false
+  }) {}
 ```
-- Example:
+
+## Example:
+
 ```javascript
 const { CMNotify } = require('@netcentric/cm-notify-core');
 
@@ -47,18 +57,15 @@ const cmNotify = new CMNotify();
 
 router.post('/cm-webhook', async (req, res, next) => {
   try {
-    const allMessages = await cmNotify.post(req.body, true);
-    if (!allMessages) {
-      return res.status(400).send('Invalid event');
-    }
+    const allMessages = await cmNotify.post(req, { waitResponse: true });
     allMessages.forEach((result, index) => {
       if (result.status === 'fulfilled') {
-        console.log(`Posting Message ${index + 1} response with value:`, result.value);
+        console.log(`Posting Message ${index + 1} responded with value:`, result.value);
       } else if (result.status === 'rejected') {
         console.log(`Posting Message ${index + 1} rejected with reason:`, result.reason);
       }
     });
-    // Message is sent to Slack/Teams
+    // Message is sent to Slack/Teams/Email
     res.send('Valid event');
   } catch (error) {
     console.error(error);
@@ -66,6 +73,31 @@ router.post('/cm-webhook', async (req, res, next) => {
   }
 });
 ```
+
+## Configuration
+
+```javascript
+/**
+ * @typedef {Object} CmNotifyConfig
+ * @property {string} [slackWebhook] - The Slack webhook URL (default: from environment variable SLACK_WEBHOOK).
+ * @property {string} [teamsEmail] - The Teams channel email address (default: from environment variable TEAMS_EMAIL).
+ * @property {string} [teamsWebhook] - The Teams webhook URL (default: from environment variable TEAMS_WEBHOOK).
+ * @property {string} [orgName] - The name of the organization (default: from environment variable ORGANIZATION_NAME).
+ * @property {string} [clientId] - The client ID (default: from environment variable CLIENT_ID).
+ * @property {string} [title] - The title of the notification (default: 'Cloud Manager Pipeline Notification').
+ * @property {string} [fromEmail] - The sender's email address (default: from environment variable EMAIL_FROM).
+ * @property {string} [dataPath] - The path to the directory containing data JSON files (default: from environment variable DATA_PATH or './data').
+ * @property {string} [secret] - The secret used for verification, can be client_secret string, path to PublicKey or content of Public Key (default: from environment variable SECRET).
+ */
+class CMNotify {
+  /**
+   * @constructor
+   * @param {CmNotifyConfig} config - Configuration object for CMNotify.
+   */
+  constructor(config = {}) {}
+}
+```
+
 # Messages
 - Slack
 ```
@@ -114,9 +146,11 @@ URL: program/12345/pipeline/12345/execution/12345
 - The token is stored in the `.data` directory in the `gmail-token.json` file.
 - For GMAIL API you also need `google-credentials.json` in the `.data` directory.
 - More info in the [@netcentric/cm-notify](https://github.com/netcentric/cm-notify/docs/setup/GMAIL.md) repo.
-- This app uses `"google-auth-library": "9.15.1"` as a peer dependency. If you need email notifications, you need to install it as well.
 
 ## Environment Variables
+
+- Environment variables are used as a fallback if configuration is not provided in the constructor.
+- Recommended to use `.env` file for sensitive data.
 - Create a `.env` file in the root folder with the following variables:
 
 Minimal required envs:
@@ -151,6 +185,3 @@ DATA_PATH=./data# path to the data folder wher tokens are stored, default is ./d
 3. Add Events to the project
 4. Select `Cloud Manager Events`
 5. Configure Webhook URL.
-
-
-

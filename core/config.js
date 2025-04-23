@@ -9,6 +9,7 @@ const DEFAULT_CONFIG = {
   title: 'Cloud Manager Pipeline Notification',
   fromEmail: process.env.EMAIL_FROM,
   dataPath: process.env.DATA_PATH || './data',
+  secret: process.env.SECRET,
 }
 
 module.exports = {

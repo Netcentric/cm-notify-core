@@ -1,7 +1,8 @@
-const { CMUtils } = require('./utils');
+const { CMUtils } = require('../utils');
 const { Events } = require('./events');
 const { Notifications } = require('./notifications');
 const { DEFAULT_CONFIG } = require('./config');
+const { CMVerify } = require('./verify');
 
 /**
  * @typedef {Object} CmNotifyConfig
@@ -13,6 +14,7 @@ const { DEFAULT_CONFIG } = require('./config');
  * @property {string} [title] - The title of the notification (default: 'Cloud Manager Pipeline Notification').
  * @property {string} [fromEmail] - The sender's email address (default: from environment variable EMAIL_FROM).
  * @property {string} [dataPath] - The path to the directory containing data JSON files (default: from environment variable DATA_PATH or './data').
+ * @property {string} [secret] - The secret used for HMAC verification (default: from environment variable SECRET).
  */
 
 /**
@@ -34,11 +36,13 @@ class CMNotify {
       clientId,
       title,
       fromEmail,
-      dataPath
+      dataPath,
+      secret
     } = {
       ...DEFAULT_CONFIG,
       ...config
     };
+    this.secret = secret;
     this.__messengerConfig = {
       slackWebhook,
       teamsWebhook,
@@ -68,13 +72,50 @@ class CMNotify {
   }
 
   /**
-   * Sends notifications to the configured channels.
-   * @param requestBody
-   * @param waitResponse {boolean} - If true, waits for all notifications to be settled before returning.
-   * @returns {Promise<Array<PromiseSettledResult<Awaited<*>>>|boolean>}
+   * Parses the raw body from the request parameters.
+   * @param {string} rawBody
+   * @returns {any|null}
    */
-  async post(requestBody, waitResponse = false) {
-    const validEvents = this.validate(requestBody);
+  parseRawBody(rawBody) {
+    let bodyString = rawBody;
+    if (CMUtils.isBase64(rawBody)) {
+      bodyString = atob(rawBody);
+    }
+    try {
+      return JSON.parse(bodyString);
+    } catch (error) {
+      console.error('Error parsing raw body:', error.message);
+      return null;
+    }
+  }
+
+  parseBody(req) {
+    const body = req?.__ow_body || req?.body;
+    if (!body || typeof body !== 'string') {
+      return body;
+    }
+    return this.parseRawBody(body);
+  }
+
+  /**
+   * Sends notifications to the configured channels.
+   * @param {Object} req - The request object containing the event data.
+   * @param {Object} config - Configuration options for the method.
+   * @param {boolean} [config.verify=false] - If true, verifies the request signature before processing.
+   * @param {boolean} [config.waitResponse=false] - If true, waits for all notifications to be settled before returning.
+   * @returns {Promise<Array<PromiseSettledResult<Awaited<*>>>|boolean>} - Returns a promise that resolves to the notification results or a boolean.
+   */
+  async post(req, {
+    verify = false,
+    waitResponse = false
+  }) {
+    const isVerified = verify ? CMVerify.verify(req, this.secret) : true;
+    if (!isVerified) {
+      console.warn('Invalid signature');
+      throw new Error('Invalid signature');
+    }
+    const parsedBody = this.parseBody(req);
+    const validEvents = this.validate(parsedBody);
     if (!validEvents || validEvents.error) {
       const errorMessage = validEvents?.error || 'No valid events found';
       console.warn(errorMessage);
@@ -101,20 +142,7 @@ class CMNotify {
   }
 }
 
-/**
- * Sends notifications to the configured channels.
- * @param requestBody
- * @param {boolean} [waitResponse] - If true, waits for all notifications to be settled before returning.
- * @param {CmNotifyConfig} [cmConfig]
- * @returns {Promise<Array<PromiseSettledResult<Awaited<*>>>|boolean>}
- */
-async function cmNotify(requestBody, waitResponse, cmConfig) {
-  const cmNotify = new CMNotify(cmConfig);
-  return cmNotify.post(requestBody, waitResponse);
-}
-
 module.exports = {
-  cmNotify,
   CMNotify,
   CMUtils
 }

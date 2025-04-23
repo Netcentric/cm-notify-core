@@ -1,4 +1,4 @@
-const { CMUtils } = require('./utils');
+const { CMUtils } = require('../utils');
 
 /**
  * @typedef {Object} PipelineEvent

@@ -13,13 +13,21 @@
   },
   "main": "core/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\""
+    "test": "echo \"Error: no test specified\"",
+    "build": "esbuild core/index.js --bundle --minify --platform=node --target=node22 --outfile=dist/index.js",
+    "gmail:code": "node core/gmail.js url",
+    "gmail:token": "node core/gmail.js 4/0Ab_5qlk8G9eyRc9SLqxRNu_Be8A1zE-xC29AjN6vOxxPU1gE99dXY8ef6j5VmYzaQHE6kw"
   },
   "dependencies": {
-    "dotenv": "16.5.0"
+    "dotenv": "16.5.0",
+    "simple-oauth2": "^5.1.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.3"
   },
   "peerDependencies": {
-    "google-auth-library": "9.15.1"
+    "express": "^5.1.0",
+    "express-session": "^1.18.1"
   },
   "keywords": [
     "Cloud Manager",

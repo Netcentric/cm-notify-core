@@ -7,6 +7,29 @@ class CMUtils {
     return resolve(dataDirPath, filename);
   }
 
+  static getValidPath(filePath) {
+    try {
+      const resolvedPath = resolve(filePath);
+      if (existsSync(resolvedPath)) {
+        return resolvedPath;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      return false;
+    }
+  }
+
+  static getFilePath(filePath, dataPath) {
+    const isValidFile = this.getValidPath(filePath);
+    if (isValidFile) {
+      return isValidFile;
+    }
+    const dataDirPath = dataPath || join(process.cwd(), '.data');
+    const dataFilePath = resolve(dataDirPath, filePath);
+    return this.getValidPath(dataFilePath);
+  }
+
   static getJsonData(filename, dataPath) {
     const filePath = this.getJsonDataFilePath(filename, dataPath);
     if (!existsSync(filePath)) {
@@ -17,13 +40,8 @@ class CMUtils {
 
   static saveJsonData(filename, data, dataPath) {
     const filePath = this.getJsonDataFilePath(filename, dataPath);
-    try {
-      writeFileSync(filePath, JSON.stringify(data, null, 2));
-      console.log('File created: ', filePath);
-    } catch (error) {
-      console.error('Error writing file:', error);
-    }
-    return filename;
+    writeFileSync(filePath, JSON.stringify(data, null, 2));
+    console.log('File created: ', filePath);
   }
 
   static convertUTCToTimezone(utcTimestamp, timezoneCode = 'cet') {
@@ -67,6 +85,14 @@ class CMUtils {
     const formatted = date.toISOString().replace('T', ' ').substring(0, 19);
 
     return `${formatted} UTC${utcOffset}`;
+  }
+
+  static isBase64(str) {
+    if (!str || typeof str !== 'string') {
+      return false;
+    }
+    const base64Regex = /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/;
+    return base64Regex.test(str);
   }
 }
 
