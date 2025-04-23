@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/netcentric/cm-notify-core/compare/v1.0.5...v1.0.6) (2025-04-23)
+
+
+### Bug Fixes
+
+* remove unused dependencies ([cd5cf1c](https://github.com/netcentric/cm-notify-core/commit/cd5cf1cc58d4b1743dacb0a04bd1f1ea23efe319))
+
 ## [1.0.5](https://github.com/netcentric/cm-notify-core/compare/v1.0.4...v1.0.5) (2025-04-23)
 
 
