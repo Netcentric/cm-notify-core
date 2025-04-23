@@ -100,7 +100,7 @@ class CMNotify {
   /**
    * Sends notifications to the configured channels.
    * @param {Object} req - The request object containing the event data.
-   * @param {Object} config - Configuration options for the method.
+   * @param {Object} [config] - Configuration options for the method.
    * @param {boolean} [config.verify=false] - If true, verifies the request signature before processing.
    * @param {boolean} [config.waitResponse=false] - If true, waits for all notifications to be settled before returning.
    * @returns {Promise<Array<PromiseSettledResult<Awaited<*>>>|boolean>} - Returns a promise that resolves to the notification results or a boolean.
