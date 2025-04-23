@@ -1,3 +1,10 @@
+## [1.0.7](https://github.com/netcentric/cm-notify-core/compare/v1.0.6...v1.0.7) (2025-04-23)
+
+
+### Bug Fixes
+
+* update jsdocs ([85cc4da](https://github.com/netcentric/cm-notify-core/commit/85cc4dad342b697959bf0321b7ca45299fca8608))
+
 ## [1.0.6](https://github.com/netcentric/cm-notify-core/compare/v1.0.5...v1.0.6) (2025-04-23)
 
 
