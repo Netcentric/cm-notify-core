@@ -1,7 +1,6 @@
 const { URL } = require('node:url');
 const { AuthorizationCode } = require('simple-oauth2');
 const { CMUtils } = require('../utils');
-const { DEFAULT_CONFIG } = require('./config');
 
 /**
  * @typedef {Object} CredentialsConfig
@@ -24,12 +23,12 @@ const { DEFAULT_CONFIG } = require('./config');
 class OAuth2Client {
   /**
    * @constructor
-   * @param [fromEmail] {string} - The email address of the sender.
-   * @param [dataPath] {string} - The path to the directory containing credentials JSON file.
+   * @param fromEmail {string} - The email address of the sender.
+   * @param dataPath {string} - The path to the directory containing credentials JSON file.
    * @throws {Error} - If fromEmail is not provided.
    * @returns {OAuth2ClientType} - The OAuth2Client instance.
    */
-  constructor(fromEmail = DEFAULT_CONFIG.fromEmail, dataPath = DEFAULT_CONFIG.dataPath) {
+  constructor(fromEmail, dataPath) {
     this.fromEmail = fromEmail;
     this.dataPath = dataPath;
     if (!this.fromEmail) {

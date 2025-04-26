@@ -86,7 +86,7 @@ router.post('/cm-webhook', async (req, res, next) => {
  * @property {string} [clientId] - The client ID (default: from environment variable CLIENT_ID).
  * @property {string} [title] - The title of the notification (default: 'Cloud Manager Pipeline Notification').
  * @property {string} [fromEmail] - The sender's email address (default: from environment variable EMAIL_FROM).
- * @property {string} [dataPath] - The path to the directory containing data JSON files (default: from environment variable DATA_PATH or './data').
+ * @property {string} [dataPath] - The path to the directory containing data JSON files (default: from environment variable DATA_PATH or '.data').
  * @property {string} [secret] - The secret used for verification, can be client_secret string, path to PublicKey or content of Public Key (default: from environment variable SECRET).
  */
 class CMNotify {
@@ -175,7 +175,7 @@ TEAMS_EMAIL=email.onmicrosoft.com@amer.teams.ms
 # Only needed if Teams email approach is used
 EMAIL_FROM=gmailuser@googleworkspacedomain.com
 # App env (optional)
-DATA_PATH=./data# path to the data folder wher tokens are stored, default is ./data
+DATA_PATH=.data# path to the data folder wher tokens are stored, default is .data
 ```
 
 ## Cloud Manager Webhook

@@ -13,7 +13,7 @@ const { CMVerify } = require('./verify');
  * @property {string} [clientId] - The client ID (default: from environment variable CLIENT_ID).
  * @property {string} [title] - The title of the notification (default: 'Cloud Manager Pipeline Notification').
  * @property {string} [fromEmail] - The sender's email address (default: from environment variable EMAIL_FROM).
- * @property {string} [dataPath] - The path to the directory containing data JSON files (default: from environment variable DATA_PATH or './data').
+ * @property {string} [dataPath] - The path to the directory containing data JSON files (default: from environment variable DATA_PATH or '.data').
  * @property {string} [secret] - The secret used for HMAC verification (default: from environment variable SECRET).
  */
 
