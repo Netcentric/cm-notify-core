@@ -1,3 +1,10 @@
+## [1.0.8](https://github.com/netcentric/cm-notify-core/compare/v1.0.7...v1.0.8) (2025-04-26)
+
+
+### Bug Fixes
+
+* move dotenv init to utils ([0ad3f0e](https://github.com/netcentric/cm-notify-core/commit/0ad3f0eb232f4de780f32efd71796529473edf2d))
+
 ## [1.0.7](https://github.com/netcentric/cm-notify-core/compare/v1.0.6...v1.0.7) (2025-04-23)
 
 
