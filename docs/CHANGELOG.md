@@ -1,3 +1,10 @@
+## [1.0.10](https://github.com/netcentric/cm-notify-core/compare/v1.0.9...v1.0.10) (2025-04-26)
+
+
+### Bug Fixes
+
+* export dotenv ([e84a61c](https://github.com/netcentric/cm-notify-core/commit/e84a61cb1765fccb1d53660dd5ebd6b49be4f84e))
+
 ## [1.0.9](https://github.com/netcentric/cm-notify-core/compare/v1.0.8...v1.0.9) (2025-04-26)
 
 
