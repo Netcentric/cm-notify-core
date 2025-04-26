@@ -58,7 +58,10 @@ class Notifications {
     this.emailClient = this.emailClient || new Email(fromEmail, dataPath);
     const message = createMessage(pipelineData, title);
     console.log('Notify email with message: ', message.email);
-    return this.emailClient.send(this.messengerConfig.teamsEmail, message.title, message.email);
+    return this.getPromise(
+      this.emailClient.send.bind(this.emailClient),
+      this.messengerConfig.teamsEmail, message.title, message.email
+    );
   }
 
   /**
@@ -70,7 +73,10 @@ class Notifications {
   async notifySlack(pipelineData, title = this.title) {
     const message = createMessage(pipelineData, title);
     console.log('Notify slack with message: ', message.slack);
-    return this.webhook(this.messengerConfig.slackWebhook, message.slack);
+    return this.getPromise(
+      this.webhook.bind(this),
+      this.messengerConfig.slackWebhook, message.slack
+    );
   }
   /**
    * Sends a notification to Teams.
@@ -81,7 +87,22 @@ class Notifications {
   async notifyTeams(pipelineData, title = this.title) {
     const message = createMessage(pipelineData, title);
     console.log('Notify teams with message: ', message.teams);
-    return this.webhook(this.messengerConfig.teamsWebhook, message.teams);
+    return this.getPromise(
+      this.webhook.bind(this),
+      this.messengerConfig.teamsWebhook, message.teams
+    );
+  }
+
+  async getPromise(func = async () => {}, ...params) {
+    return new Promise((resolve, reject) => {
+      func(...params)
+        .then(result => {
+          resolve(result);
+        })
+        .catch(error => {
+          reject(error.message);
+        });
+    });
   }
 }
 

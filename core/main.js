@@ -64,8 +64,8 @@ class CMNotify {
     }
 
     const validEvents = this.events.getValidEvents(requestBody);
-    if (validEvents?.error) {
-      return { error: validEvents.error || 'No valid events found' };
+    if (validEvents.error) {
+      return { error: validEvents.error};
     }
 
     return validEvents;
@@ -111,15 +111,12 @@ class CMNotify {
   } = {}) {
     const isVerified = verify ? CMVerify.verify(req, this.secret) : true;
     if (!isVerified) {
-      console.warn('Invalid signature');
       throw new Error('Invalid signature');
     }
     const parsedBody = this.parseBody(req);
     const validEvents = this.validate(parsedBody);
-    if (!validEvents || validEvents.error) {
-      const errorMessage = validEvents?.error || 'No valid events found';
-      console.warn(errorMessage);
-      throw new Error(errorMessage);
+    if (validEvents.error) {
+      throw new Error(validEvents.error);
     }
 
     const promises = [];
@@ -138,6 +135,13 @@ class CMNotify {
     if (waitResponse) {
       return Promise.allSettled(promises);
     }
+    Promise.allSettled(promises)
+      .then(results => {
+        console.log('Done. ', results);
+      })
+      .catch(error => {;
+        console.error('Error. ', error);
+      });
     return true;
   }
 }

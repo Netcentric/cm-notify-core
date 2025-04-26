@@ -95,19 +95,19 @@ class Events {
   /**
    * Extracts and validates the event type from the provided event object.
    * @param {PipelineEvent} event - The event object to process.
-   * @returns {PipelineEventDetails|null} An object containing event details (status, date, URL, URL text, environment) or null if invalid.
+   * @returns {PipelineEventDetails|{error: string}} An object containing event details (status, date, URL, URL text, environment) or null if invalid.
    */
   getEventType(event) {
     if (!event) {
       console.log('Event is null');
-      return null;
+      return { error: 'Event is null' };
     }
     const validEvent = Object.entries(this.eventsConfig)
       .find(([, val]) => val.type === event['@type'] && val.objectType === event['xdmEventEnvelope:objectType']);
 
     if (!validEvent) {
       console.log('Event Not valid', event['@type'], event['xdmEventEnvelope:objectType']);
-      return null;
+      return { error: 'Event is Not valid' };
     }
 
     console.log('validEvent:', validEvent);
@@ -135,19 +135,16 @@ class Events {
     const events = requestBody.events || [requestBody.event];
     console.log('EVENT received: ', events?.length);
     if (!events || !events.length) {
-      console.warn('No events found');
       return { error: 'No events found' };
     }
     const validEvents = [];
     events.forEach(item => {
-      if (!item || !item.event) return;
-      const eventType = this.getEventType(item.event);
+      const eventType = this.getEventType(item.event || item);
       if (eventType) {
         validEvents.push(eventType);
       }
     });
     if (validEvents.length === 0) {
-      console.warn('No Valid events found');
       return { error: 'No Valid events found' };
     }
 

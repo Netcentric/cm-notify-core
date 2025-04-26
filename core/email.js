@@ -53,7 +53,14 @@ class Email {
     if (!this.client) {
       throw new Error('OAuth2 client not initialized');
     }
-    const { access_token } = await this.client.getAccessToken();
+    const { token } = await this.client.getAccessToken();
+    if (!token) {
+      throw new Error('Missing token object');
+    }
+    const { access_token } = token;
+    if (!access_token) {
+      throw new Error('Missing access_token');
+    }
     console.log('token retrieved from oAuth2Client', access_token.length);
     const url = 'https://gmail.googleapis.com/gmail/v1/users/me/messages/send';
     const res = await fetch(url, {
