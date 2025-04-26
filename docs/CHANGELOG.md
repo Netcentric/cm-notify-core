@@ -1,3 +1,10 @@
+## [1.0.9](https://github.com/netcentric/cm-notify-core/compare/v1.0.8...v1.0.9) (2025-04-26)
+
+
+### Bug Fixes
+
+* export oauthClient ([8fcf2eb](https://github.com/netcentric/cm-notify-core/commit/8fcf2eb0bf3918e1ca6440a4b329df14e517a0e4))
+
 ## [1.0.8](https://github.com/netcentric/cm-notify-core/compare/v1.0.7...v1.0.8) (2025-04-26)
 
 
