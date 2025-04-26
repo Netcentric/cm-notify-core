@@ -1,8 +1,8 @@
 const { CMUtils } = require('../utils');
 const { Events } = require('./events');
 const { Notifications } = require('./notifications');
-const { DEFAULT_CONFIG } = require('./config');
 const { CMVerify } = require('./verify');
+const { OAuth2Client } = require('./auth');
 
 /**
  * @typedef {Object} CmNotifyConfig
@@ -28,6 +28,7 @@ class CMNotify {
    * @param {CmNotifyConfig} config - Configuration object for CMNotify.
    */
   constructor(config = {}) {
+    const DEFAULT_CONFIG = CMUtils.getDefaultConfig();
     const {
       slackWebhook,
       teamsWebhook,
@@ -144,5 +145,6 @@ class CMNotify {
 
 module.exports = {
   CMNotify,
-  CMUtils
+  CMUtils,
+  OAuth2Client
 }

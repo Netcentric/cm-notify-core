@@ -1,5 +1,6 @@
 const { join, resolve } = require('node:path');
 const { existsSync, writeFileSync } = require('node:fs');
+const { DEFAULT_CONFIG } = require('../core/config');
 
 class CMUtils {
   static getJsonDataFilePath(filename, dataPath) {
@@ -103,6 +104,10 @@ class CMUtils {
     } else {
       console.log('No .env file found. Skipping dotenv initialization.');
     }
+  }
+
+  static getDefaultConfig() {
+    return DEFAULT_CONFIG;
   }
 }
 
