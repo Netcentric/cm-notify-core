@@ -1,3 +1,10 @@
+## [1.0.11](https://github.com/netcentric/cm-notify-core/compare/v1.0.10...v1.0.11) (2025-04-26)
+
+
+### Bug Fixes
+
+* add default params ([416c088](https://github.com/netcentric/cm-notify-core/commit/416c08833923c28fc81ad68f43ec5fdb6a1afa1e))
+
 ## [1.0.10](https://github.com/netcentric/cm-notify-core/compare/v1.0.9...v1.0.10) (2025-04-26)
 
 
