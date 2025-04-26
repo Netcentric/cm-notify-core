@@ -1,6 +1,6 @@
 const { join, resolve } = require('node:path');
 const { existsSync, writeFileSync } = require('node:fs');
-const { DEFAULT_CONFIG } = require('../core/config');
+const { DEFAULT_CONFIG } = require('./config');
 
 class CMUtils {
   static getJsonDataFilePath(filename, dataPath) {
@@ -94,16 +94,6 @@ class CMUtils {
     }
     const base64Regex = /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/;
     return base64Regex.test(str);
-  }
-
-  static initDotEnv() {
-    const dotenv = require('dotenv');
-    const envFilePath = this.getValidPath('.env');
-    if (envFilePath) {
-      dotenv.config({ path: envFilePath });
-    } else {
-      console.log('No .env file found. Skipping dotenv initialization.');
-    }
   }
 
   static getDefaultConfig() {

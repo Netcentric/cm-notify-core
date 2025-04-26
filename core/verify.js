@@ -1,6 +1,6 @@
 const { readFileSync } = require('node:fs');
 const { createVerify, createHmac, createPublicKey } = require('node:crypto');
-const { CMUtils } = require('../utils');
+const { CMUtils } = require('./utils');
 
 class CMVerify {
   /**

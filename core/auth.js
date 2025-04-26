@@ -1,6 +1,6 @@
 const { URL } = require('node:url');
 const { AuthorizationCode } = require('simple-oauth2');
-const { CMUtils } = require('../utils');
+const { CMUtils } = require('./utils');
 
 /**
  * @typedef {Object} CredentialsConfig
