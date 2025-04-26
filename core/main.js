@@ -108,7 +108,7 @@ class CMNotify {
   async post(req, {
     verify = false,
     waitResponse = false
-  }) {
+  } = {}) {
     const isVerified = verify ? CMVerify.verify(req, this.secret) : true;
     if (!isVerified) {
       console.warn('Invalid signature');
