@@ -1,3 +1,10 @@
+## [1.0.12](https://github.com/netcentric/cm-notify-core/compare/v1.0.11...v1.0.12) (2025-04-26)
+
+
+### Bug Fixes
+
+* catch non promise errors ([04f1a33](https://github.com/netcentric/cm-notify-core/commit/04f1a3385956f970a6c1c977df39fe1f565a7f08))
+
 ## [1.0.11](https://github.com/netcentric/cm-notify-core/compare/v1.0.10...v1.0.11) (2025-04-26)
 
 
